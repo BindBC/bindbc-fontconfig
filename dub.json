@@ -1,0 +1,39 @@
+{
+	"name": "bindbc-fontconfig",
+	"description": "Static & dynamic bindings to Fontconfig, compatible with BetterC, @nogc, and nothrow.",
+	"authors": ["Aya Partridge"],
+	"license": "BSL-1.0",
+	
+	"dependencies": {"bindbc-common": "~>1.0.0"},
+	"targetType": "staticLibrary",
+	"targetPath": "lib",
+	"targetName": "BindBC_Fc",
+	
+	"configurations": [
+		{
+			"name": "dynamic",
+			"dependencies": {"bindbc-loader": "~>1.1.0"},
+		},
+		{
+			"name": "dynamicBC",
+			"dependencies": {"bindbc-loader": "~>1.1.0"},
+			"subConfigurations": {
+				"bindbc-loader": "yesBC",
+				"bindbc-common": "yesBC",
+			},
+			"buildOptions": ["betterC"],
+		},
+		{
+			"name": "static",
+			"versions": ["BindFc_Static"],
+		},
+		{
+			"name": "staticBC",
+			"subConfigurations": {
+				"bindbc-common": "yesBC",
+			},
+			"buildOptions": ["betterC"],
+			"versions": ["BindFc_Static"],
+		}
+	],
+}
