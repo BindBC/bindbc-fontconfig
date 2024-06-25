@@ -9,9 +9,8 @@ module fc.freetype;
 import bindbc.fontconfig.config;
 import bindbc.fontconfig.codegen;
 
-version(Fc_FT):
-struct FT_FaceRec;
-alias FT_Face = FT_FaceRec*;
+import fc;
+import bindbc.freetype;
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
@@ -24,3 +23,8 @@ mixin(joinFnBinds((){
 	];
 	return ret;
 }()));
+
+static if(!bindbc.fontconfig.config.staticBinding):
+import bindbc.loader;
+
+mixin(makeDynloadFns("FontconfigFreeType", makeLibPaths(["fontconfig"]), [__MODULE__]));

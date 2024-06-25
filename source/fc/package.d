@@ -9,8 +9,6 @@ module fc;
 import bindbc.fontconfig.config;
 import bindbc.fontconfig.codegen;
 
-public import fc.freetype;
-
 alias FcBool = int;
 
 enum{
@@ -51,11 +49,11 @@ enum{
 	FC_INDEX                      = "index",
 	FC_FT_FACE                    = "ftface",
 	deprecated FC_RASTERISER      = "rasterizer",
-	FC_RASTERIZER                 = FC_RASTERISER,
+	deprecated FC_RASTERIZER      = "rasterizer",
 	FC_OUTLINE                    = "outline",
 	FC_SCALABLE                   = "scalable",
 	FC_COLOUR                     = "color",
-	FC_COLOR                      = FC_COLOUR,
+	FC_COLOR                      = "color",
 	FC_VARIABLE                   = "variable",
 	deprecated FC_SCALE           = "scale",
 	FC_SYMBOL                     = "symbol",
@@ -90,9 +88,9 @@ enum{
 }
 
 enum{
-	FC_CACHE_SUFFIX     = ".cache-" ~ FcCacheVersion,
-	FC_DIR_CACHE_FILE   = "fonts.cache-" ~ FcCacheVersion,
-	FC_USER_CACHE_FILE  = ".fonts.cache-" ~ FcCacheVersion,
+	FC_CACHE_SUFFIX     = ".cache-" ~ FC_CACHE_VERSION,
+	FC_DIR_CACHE_FILE   = "fonts.cache-" ~ FC_CACHE_VERSION,
+	FC_USER_CACHE_FILE  = ".fonts.cache-" ~ FC_CACHE_VERSION,
 }
 
 enum{
@@ -343,7 +341,7 @@ enum FC_CHARSET_DONE = cast(dchar)-1;
 pragma(inline,true) nothrow @nogc pure @safe{
 	bool FcIsUpper(char c) => 0x41 <= c && c <= 0x5A;
 	bool FcIsLower(char c) => 0x61 <= c && c <= 0x7A;
-	char FcToLower(char c) => FcIsUpper(c) ? c - 0x41 + 0x61 : c;
+	char FcToLower(char c) => FcIsUpper(c) ? cast(char)(c - 0x41 + 0x61) : c;
 }
 
 enum FC_UTF8_MAX_LEN = 6;
@@ -579,9 +577,4 @@ mixin(joinFnBinds((){
 static if(!staticBinding):
 import bindbc.loader;
 
-mixin(makeDynloadFns("Fontconfig", makeLibPaths(["fontconfig"]),
-	[__MODULE__] ~ (){
-		version(Fontconfig_FT) return ["fc.freetype"];
-		else return null;
-	}(),
-));
+mixin(makeDynloadFns("Fontconfig", makeLibPaths(["fontconfig"]), [__MODULE__]));

@@ -34,6 +34,20 @@
 			},
 			"buildOptions": ["betterC"],
 			"versions": ["BindFc_Static"],
-		}
+		},
+	],
+	
+	"subPackages": [
+		{
+			"name": "freetype",
+			"sourcePaths": ["freetype"],
+			"importPaths": ["freetype"],
+			"dependencies": {
+				"bindbc-fontconfig": {"path": "../"},
+				"bindbc-freetype": "~>1.3.0",
+			},
+			"targetPath": "lib",
+			"targetName": "BindBC_Fc_FT",
+		},
 	],
 }
