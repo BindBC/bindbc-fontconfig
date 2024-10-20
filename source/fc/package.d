@@ -17,7 +17,7 @@ enum{
 	FC_REVISION  = fcVersion.patch,
 }
 
-enum FC_VERSION	= (FC_MAJOR*  10000) + (FC_MINOR*  100) + FC_REVISION;
+enum FC_VERSION	= (FC_MAJOR * 10_000) + (FC_MINOR * 100) + FC_REVISION;
 
 enum FC_CACHE_VERSION_NUMBER = 9;
 enum FC_CACHE_VERSION = "9";

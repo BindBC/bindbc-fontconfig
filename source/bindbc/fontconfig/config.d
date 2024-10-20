@@ -10,7 +10,7 @@ public import bindbc.common.types: va_list;
 public import bindbc.common.versions: Version;
 
 enum staticBinding = (){
-	version(BindBC_Static)         return true;
+	version(BindBC_Static)      return true;
 	else version(BindFc_Static) return true;
 	else return false;
 }();
